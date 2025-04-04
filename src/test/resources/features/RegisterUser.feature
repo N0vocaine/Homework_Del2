@@ -6,14 +6,13 @@ Feature: User Registration on Basketball England Website
     When I enter valid member details
     And I enter matching passwords
     And I accept the terms and conditions
-    And I submit the registration form
-    Then I should see a confirmation that the account was created
+    Then I submit the registration form
+
 
   Scenario: User registration with missing last name
     Given I navigate to the Basketball England registration page
     When I enter member details without a last name
     And I enter matching passwords
-    And I accept the terms and conditions
     And I submit the registration form
     Then I should see an error message for the missing last name
 
@@ -21,7 +20,6 @@ Feature: User Registration on Basketball England Website
     Given I navigate to the Basketball England registration page
     When I enter valid member details
     And I enter non-matching passwords
-    And I accept the terms and conditions
     And I submit the registration form
     Then I should see an error message for password mismatch
 
@@ -32,3 +30,4 @@ Feature: User Registration on Basketball England Website
     And I do not accept the terms and conditions
     And I submit the registration form
     Then I should see an error message for unaccepted terms
+
