@@ -6,7 +6,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegistrationStepdefs {
     WebDriver driver;
@@ -49,7 +52,7 @@ public class RegistrationStepdefs {
 
     @And("I submit the registration form")
     public void iSubmitTheRegistrationForm() {
-        driver.findElement(By.cssSelector("#signup_form > div.form-actions.noborder > input")).click();  // Confirm and join
+        driver.findElement(By.xpath("//*[@id=\"signup_form\"]/div[12]/input")).click();  // Confirm and join
     }
 
     @Then("I should see a confirmation that the account was created")
@@ -60,10 +63,18 @@ public class RegistrationStepdefs {
 
     @When("I enter member details without a last name")
     public void iEnterMemberDetailsWithoutALastName() {
+        driver.findElement(By.cssSelector("#dp")).sendKeys("26-05-1993");
+        driver.findElement(By.cssSelector("#member_firstname")).sendKeys("John");
+        driver.findElement(By.cssSelector("#member_emailaddress")).sendKeys("john@gmail.com");
+        driver.findElement(By.cssSelector("#member_confirmemailaddress")).sendKeys("john@gmail.com");
+
     }
 
     @Then("I should see an error message for the missing last name")
     public void iShouldSeeAnErrorMessageForTheMissingLastName() {
+        WebElement error = driver.findElement(By.cssSelector("#signup_form > div:nth-child(6) > div:nth-child(2) > div > span > span"));
+        assertTrue(error.isDisplayed());
+        driver.quit();
     }
 
     @And("I enter non-matching passwords")
