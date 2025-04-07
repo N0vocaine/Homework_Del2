@@ -105,6 +105,7 @@ public class RegistrationStepdefs {
     @Then("I should see an error message for the missing last name")
     public void iShouldSeeAnErrorMessageForTheMissingLastName() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
         WebElement error = driver.findElement(By.cssSelector("#signup_form > div:nth-child(6) > div:nth-child(2) > div > span > span"));
         assertTrue(error.isDisplayed(), "Last name is required");
         //driver.quit();
@@ -120,6 +121,7 @@ public class RegistrationStepdefs {
     @Then("I should see an error message for password mismatch")
     public void iShouldSeeAnErrorMessageForPasswordMismatch() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
         WebElement error = driver.findElement((By.cssSelector("#signup_form > div:nth-child(9) > div > div.row > div:nth-child(2) > div > span > span")));
         assertTrue(error.isDisplayed(), "Password did not match");
         //driver.quit();
