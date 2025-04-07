@@ -7,6 +7,7 @@ Feature: User Registration on Basketball England Website
     And I enter matching passwords
     And I accept the terms and conditions
     Then I submit the registration form
+    And I should see a success message
 
 
   Scenario: User registration with missing last name
