@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,9 +22,17 @@ public class RegistrationStepdefs {
     //String uniqecode = String.valueOf(UUID.randomUUID());
     String email = "lara+" + System.currentTimeMillis() + "@gmail.com";
 
-    @Given("I navigate to the Basketball England registration page")
-    public void iNavigateToTheBasketballEnglandRegistrationPage() {
-        driver = new ChromeDriver();
+    private void waitAndClick(String css) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(css)));
+        element.click();
+    }
+
+    @Given("I navigate to the Basketball England registration page using {string}")
+    public void iNavigateToTheBasketballEnglandRegistrationPage(String browser) {
+        if (browser.equals("chrome")) driver = new ChromeDriver();
+        if (browser.equals("edge")) driver = new EdgeDriver();
+        //driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://membership.basketballengland.co.uk/NewSupporterAccount");
 
@@ -48,45 +57,35 @@ public class RegistrationStepdefs {
     public void iAcceptTheTermsAndConditions() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        WebElement firstCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By
-                .cssSelector("#signup_form > div:nth-child(11) > div > div > div:nth-child(12) > div > label > span.box")));
-        firstCheckbox.click();  // Wait for and click the first checkbox
+        waitAndClick("#signup_form > div:nth-child(11) > " +
+                "div > div > div:nth-child(12) > div > label > span.box");  // Wait for and click the first checkbox
 
-        WebElement secondCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By
-                .cssSelector("#signup_form > div:nth-child(12) > div > div:nth-child(2) > div:nth-child(1) > label > span.box")));
-        secondCheckbox.click();  // Wait for and click the second checkbox
+        waitAndClick("#signup_form > " +
+                "div:nth-child(12) > div > div:nth-child(2) > div:nth-child(1) > label > span.box");  // Wait for and click the second checkbox
 
-        WebElement thirdCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By
-                .cssSelector("#signup_form > div:nth-child(12) > div > div:nth-child(2) > div.md-checkbox.margin-top-10 > label > span.box")));
-        thirdCheckbox.click();  // Wait for and click the third checkbox
+        waitAndClick("#signup_form > div:nth-child(12) > div > " +
+                "div:nth-child(2) > div.md-checkbox.margin-top-10 > label > span.box");// Wait for and click the third checkbox
 
-        WebElement fourthCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By
-                .cssSelector("#signup_form > div:nth-child(12) > div > div:nth-child(4) > label > span.box")));
-        fourthCheckbox.click();  // Wait for and click the fourth checkbox
+        waitAndClick("#signup_form > div:nth-child(12) > div > " +
+                "div:nth-child(4) > label > span.box"); // Wait for and click the fourth checkbox
 
-        WebElement fifthCheckbox = wait.until(ExpectedConditions.elementToBeClickable(By
-                .cssSelector("#signup_form > div:nth-child(12) > div > div:nth-child(7) > label > span.box")));
-        fifthCheckbox.click();// Wait for and click the fifth checkbox
-
-
+        waitAndClick("#signup_form > div:nth-child(12) > div > " +
+                "div:nth-child(7) > label > span.box");  // Wait for and click the fifth checkbox
     }
 
     @Then("I submit the registration form")
     public void iSubmitTheRegistrationForm() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By
-                .cssSelector("#signup_form > div.form-actions.noborder > input")));   // Confirm and join
-        submitButton.click();
+        waitAndClick("#signup_form > div.form-actions.noborder > input");   // Confirm and join
+
 
     }
+
     @And("I should see a success message")
     public void iShouldSeeASuccessMessage() {
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement successMessage = wait.until(ExpectedConditions.elementToBeClickable(By
                 .cssSelector("body > div > div.page-content-wrapper > div > h2")));
         assertTrue(successMessage.isDisplayed());
-
-
     }
 
 
