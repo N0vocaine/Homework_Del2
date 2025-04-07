@@ -55,7 +55,6 @@ public class RegistrationStepdefs {
 
     @And("I accept the terms and conditions")
     public void iAcceptTheTermsAndConditions() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         waitAndClick("#signup_form > div:nth-child(11) > " +
                 "div > div > div:nth-child(12) > div > label > span.box");  // Wait for and click the first checkbox
