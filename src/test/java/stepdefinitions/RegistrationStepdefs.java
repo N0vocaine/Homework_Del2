@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegistrationStepdefs {
     WebDriver driver;
-    String uniqecode = String.valueOf(UUID.randomUUID());
+    //String uniqecode = String.valueOf(UUID.randomUUID());
     String email = "lara+" + System.currentTimeMillis() + "@gmail.com";
 
     @Given("I navigate to the Basketball England registration page")
