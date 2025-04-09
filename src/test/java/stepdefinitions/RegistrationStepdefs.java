@@ -39,11 +39,11 @@ public class RegistrationStepdefs {
 
     @When("I enter valid member details")
     public void iEnterValidMemberDetails() {
-        driver.findElement(By.cssSelector("#dp")).sendKeys("14-03-1981"); // Date of birth
+        driver.findElement(By.cssSelector(".custom-date")).sendKeys("14-03-1981"); // Date of birth
         driver.findElement(By.cssSelector("#member_firstname")).sendKeys("Lara"); // First name
         driver.findElement(By.cssSelector("#member_lastname")).sendKeys("Thomson"); // Last name
-        driver.findElement(By.cssSelector("#member_emailaddress")).sendKeys(email); // Email adress
-        driver.findElement(By.cssSelector("#member_confirmemailaddress")).sendKeys(email); //Confirm email adress
+        driver.findElement(By.cssSelector("#member_emailaddress")).sendKeys(email); // Email address
+        driver.findElement(By.cssSelector("#member_confirmemailaddress")).sendKeys(email); //Confirm email address
     }
 
     @And("I enter matching passwords")
@@ -57,25 +57,16 @@ public class RegistrationStepdefs {
     @And("I accept the terms and conditions")
     public void iAcceptTheTermsAndConditions() {
 
-        waitAndClick("#signup_form > div:nth-child(11) > " +
-                "div > div > div:nth-child(12) > div > label > span.box");  // Wait for and click the first checkbox
-
-        waitAndClick("#signup_form > " +
-                "div:nth-child(12) > div > div:nth-child(2) > div:nth-child(1) > label > span.box");  // Wait for and click the second checkbox
-
-        waitAndClick("#signup_form > div:nth-child(12) > div > " +
-                "div:nth-child(2) > div.md-checkbox.margin-top-10 > label > span.box");// Wait for and click the third checkbox
-
-        waitAndClick("#signup_form > div:nth-child(12) > div > " +
-                "div:nth-child(4) > label > span.box"); // Wait for and click the fourth checkbox
-
-        waitAndClick("#signup_form > div:nth-child(12) > div > " +
-                "div:nth-child(7) > label > span.box");  // Wait for and click the fifth checkbox
+        waitAndClick("label[for='signup_basketballrole_19']");// Wait for and click the first checkbox
+        waitAndClick("label[for='sign_up_25']");// Wait for and click the second checkbox
+        waitAndClick("label[for='sign_up_26']");   // Wait for and click the third checkbox
+        waitAndClick("label[for='sign_up_27']");   // Wait for and click the fourth checkbox
+        waitAndClick("label[for='fanmembersignup_agreetocodeofethicsandconduct']"); // Wait for and click the fifth checkbox
     }
 
     @Then("I submit the registration form")
     public void iSubmitTheRegistrationForm() {
-        waitAndClick("#signup_form > div.form-actions.noborder > input");   // Confirm and join
+        waitAndClick("input[value='CONFIRM AND JOIN']");   // Confirm and join
 
     }
 
@@ -93,8 +84,8 @@ public class RegistrationStepdefs {
     public void iEnterMemberDetailsWithoutALastName() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        driver.findElement(By.cssSelector("#dp")).sendKeys("14-03-1981");// Date of birth
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#dp")));
+        driver.findElement(By.cssSelector(".custom-date")).sendKeys("14-03-1981");// Date of birth
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".custom-date")));
         driver.findElement(By.cssSelector("#member_firstname"))
                 .sendKeys("Lara"); // First name
         driver.findElement(By.cssSelector("#member_emailaddress")).sendKeys(email); // Email address
@@ -107,7 +98,7 @@ public class RegistrationStepdefs {
 
     @Then("I should see an error message for the missing last name")
     public void iShouldSeeAnErrorMessageForTheMissingLastName() {
-        WebElement error = driver.findElement(By.cssSelector("#signup_form > div:nth-child(6) > div:nth-child(2) > div > span > span"));
+        WebElement error = driver.findElement(By.cssSelector("span.warning.field-validation-error"));
         assertTrue(error.isDisplayed(), "Last name is required");
         System.out.println("Last name is required");
 
@@ -125,7 +116,8 @@ public class RegistrationStepdefs {
     @Then("I should see an error message for password mismatch")
     public void iShouldSeeAnErrorMessageForPasswordMismatch() {
 
-        WebElement error = driver.findElement((By.cssSelector("#signup_form > div:nth-child(9) > div > div.row > div:nth-child(2) > div > span > span")));
+        WebElement error = driver.findElement((By
+                .cssSelector("span[for='signupunlicenced_confirmpassword']")));
         assertTrue(error.isDisplayed(), "Password did not match");
         System.out.println("Password did not match");
     }
@@ -137,8 +129,7 @@ public class RegistrationStepdefs {
     @Then("I should see an error message for unaccepted terms")
     public void iShouldSeeAnErrorMessageForUnacceptedTerms() {
 
-        WebElement error = driver.findElement(By.cssSelector("#signup_form > div:nth-child(12) > " +
-                "div > div:nth-child(2) > div:nth-child(1) > span > span"));
+        WebElement error = driver.findElement(By.cssSelector("a[href='/Documents/Terms and Conditions.pdf']"));
         assertTrue(error.isDisplayed());
         System.out.println("You must accept the terms and conditions!");
 
